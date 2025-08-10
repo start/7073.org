@@ -23,7 +23,7 @@
     /* Sorry, user agents, but everything must be cute */
     font-family: DynaPuff !important;
 
-    /* For this font, we have just one weight and style */
+    /* Our font source file contains just one weight and style */
     font-weight: 700 !important;
     font-style: normal !important;
   }
@@ -64,10 +64,6 @@
     --green: limegreen;
     --yellow: gold;
     --year-line-width: 2.175em;
-    --year-line-midpoint: calc(var(--year-line-width) / 2);
-    --side-of-heart-tilt: -10deg;
-    --heart-y-translation: -0.05em;
-    --heart-x-translation: 2em;
   }
 
   #year-2025,
@@ -81,26 +77,29 @@
     width: calc(var(--year-line-width) / 2);
   }
 
-  /* "2025", "to", and "7073" */
+  /* Every line of text: "2025", "to", and "7073" */
   div { display: flex }
 
-  /* Every digit and letter */
+  /* Every individual digit and letter */
   div > i { animation-name: reveal-color, main }
 
   /* Digits' and letters' inner elements exist to be animated */
   div > i i { animation-name: main }
 
-  /* Allow transforms */
+  /* Allow transforms on digits, letters, and their inner elements */
   i { display: inline-block }
 
   #year-2025 {
     animation-name: year-2025--slow-drift-downward;
+
+    --side-of-heart-tilt: -10deg;
+    --heart-y-translation: -0.05em;
   }
 
   #heart-right-side {
-    --revealed-color: var(--red);
+    --color: var(--red);
     --y-rot: 0.5turn;
-    transform-origin: var(--year-line-midpoint);
+    transform-origin: calc(var(--year-line-width) / 2);
   }
 
   #heart-right-side--inner {
@@ -110,23 +109,23 @@
   }
 
   #letter-o-in-so {
-    --revealed-color: var(--yellow);
+    --color: var(--yellow);
     --z-rot: -350deg;
     --x-trans: -0.04em;
     --z-trans: 0.01px
   }
 
   #heart-left-side {
-    --revealed-color: var(--red);
+    --color: var(--red);
     --y-trans: var(--heart-y-translation);
     --y-rot: 0.5turn;
     --z-rot: var(--side-of-heart-tilt)
   }
 
   #letter-s-in-so {
-    --revealed-color: var(--green);
+    --color: var(--green);
     --y-rot: 0.5turn;
-    transform-origin: calc(var(--year-line-midpoint) / 2 * -1);
+    transform-origin: calc(var(--year-line-width) / -4);
   }
 
   #letter-s-in-so--inner {
@@ -135,7 +134,7 @@
   }
 
   #cross {
-    --revealed-color: var(--yellow);
+    --color: var(--yellow);
     animation-name: reveal-color, cross--drift-right;
   }
 
@@ -144,7 +143,7 @@
   }
 
   #world {
-    --revealed-color: var(--blue);
+    --color: var(--blue);
     --x-trans: -0.18em;
     --y-trans: 0.95em;
     --z-trans: 1em;
@@ -155,35 +154,35 @@
   }
 
   #year-7073--outer {
-    animation-name: year-7073--reorder;
+    animation-name: year-7073--place-first;
     transform-origin: center -1.9em;
   }
 
   #year-7073 {
-    animation-name: year-7073--flip;
+    animation-name: year-7073--finish-somersault;
   }
 
   #letter-l-in-love {
-    --revealed-color: var(--red);
+    --color: var(--red);
     --z-rot: 0.5turn;
     --x-trans: -0.1em;
     --z-trans: 0.03px;
   }
 
   #letter-o-in-love {
-    --revealed-color: var(--green);
+    --color: var(--green);
     --z-rot: 2turn;
     --z-trans: 0.02px;
   }
 
   #letter-v-in-love {
-    --revealed-color: var(--yellow);
+    --color: var(--yellow);
     --z-rot: 100deg;
     --z-trans: 0.01px;
   }
 
   #letter-e-in-love {
-    --revealed-color: var(--blue);
+    --color: var(--blue);
     --z-rot: 0.5turn;
   }
 
@@ -208,16 +207,16 @@
   }
 
   @keyframes reveal-color {
-    20%, 70%  { color: var(--revealed-color) }
+    20%, 70%  { color: var(--color) }
     88%       { color: revert }
   }
 
-  @keyframes year-7073--reorder {
+  @keyframes year-7073--place-first {
     12%, 70%  { transform: rotateX(0.4turn) }
     88%       { transform: rotateX(0) }
   }
 
-  @keyframes year-7073--flip {
+  @keyframes year-7073--finish-somersault {
     30%, 70%  { transform: rotateX(0.6turn) }
     88%       { transform: rotateX(0) }
   }
@@ -234,7 +233,10 @@
 
   @keyframes cross--twirling-descent {
     0% {
-      animation-timing-function: cubic-bezier(.3, 0, .3, 1);
+      /* Start and finish more gently than with the default 'ease' */
+      animation-timing-function: cubic-bezier(
+        0.3, 0,
+        0.3, 1);
     }
 
     33%, 70% {

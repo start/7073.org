@@ -1,5 +1,5 @@
 # Read _me?_
 
-- Site: https://7073.org
-- Font: https://fonts.google.com/specimen/DynaPuff/about
+- Site: [7073.org](https://7073.org)
+- Font: [fonts.google.com/specimen/DynaPuff/about](https://fonts.google.com/specimen/DynaPuff/about)
 - Icon: The adorable lowercase “t”
